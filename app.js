@@ -14,8 +14,8 @@
     tz: 'America/Monterrey',
     promoEndsAt: '2026-10-31T23:59:59-06:00', // fin de la promoción de octubre
     loaderMin: 1900,                // duración mínima del loader (ms)
-    schedule: {                     // 0 = domingo ... 6 = sábado, rangos [inicio, fin) en horas
-      0: [],
+    schedule: {                     // 0 = domingo ... 6 = sábado, rangos [inicio, fin) en horas; null = a disponibilidad médica
+      0: null,
       1: [[10, 13], [16, 20]],
       2: [[10, 13], [16, 20]],
       3: [[10, 13], [16, 20]],
@@ -68,13 +68,15 @@
     };
     const render = () => {
       const { day, min } = now();
-      const ranges = CONFIG.schedule[day];
+      const ranges = CONFIG.schedule[day] || [];
       let text = '';
       let open = false;
       const current = ranges.find(([a, b]) => min >= a * 60 && min < b * 60);
       if (current) {
         open = true;
         text = 'Abierto ahora, cierra a las ' + fmt(current[1]);
+      } else if (CONFIG.schedule[day] === null) {
+        text = 'Hoy domingo atendemos a disponibilidad médica';
       } else {
         const later = ranges.find(([a]) => min < a * 60);
         if (later) {
@@ -83,6 +85,10 @@
           let d = day;
           for (let i = 1; i <= 7; i++) {
             d = (day + i) % 7;
+            if (CONFIG.schedule[d] === null) {
+              text = 'Cerrado ahora, ' + (i === 1 ? 'mañana ' : 'el ') + days[d] + ' atendemos a disponibilidad médica';
+              break;
+            }
             if (CONFIG.schedule[d].length) {
               text = 'Cerrado ahora, abre ' + (i === 1 ? 'mañana' : 'el ' + days[d]) + ' a las ' + fmt(CONFIG.schedule[d][0][0]);
               break;

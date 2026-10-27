@@ -591,7 +591,6 @@ h1, h2, h3 {
   letter-spacing: -0.03em; color: var(--ink); white-space: nowrap;
   font-variation-settings: "wdth" 88;
 }
-.ticker__list li:nth-child(6n + 3) { color: transparent; -webkit-text-stroke: 1.5px var(--brand-600); }
 .ticker__sep { color: var(--coral); display: grid; place-items: center; }
 .ticker__sep .sprout { width: clamp(1.8rem, 3vw, 2.6rem); height: clamp(1.5rem, 2.5vw, 2.1rem); }
 @keyframes marquee { to { transform: translateX(-50%); } }
@@ -606,7 +605,7 @@ h1, h2, h3 {
 @keyframes float-rot { from { rotate: -6deg; } to { rotate: 8deg; } }
 .manifesto__text {
   position: relative;
-  font: 700 clamp(1.85rem, 1rem + 3.7vw, 4.3rem)/1.13 var(--f-display);
+  font: 500 clamp(1.85rem, 1rem + 3.7vw, 4.3rem)/1.13 var(--f-display);
   font-variation-settings: "wdth" 90;
   letter-spacing: -0.035em; color: var(--ink); max-width: 24em; text-wrap: balance;
 }
